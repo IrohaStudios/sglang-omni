@@ -577,6 +577,7 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthesize-speech">Synthesize Speech</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#request-parameters">Request Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iroha-tts-controls">Iroha-TTS Controls</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-limitations">Known Limitations</a></li>
 </ul>
             </nav>
@@ -744,6 +745,39 @@ references on CPU instead, clear both the GPU placement and its budget:</p>
 </table>
 </div>
 </section>
+<section id="iroha-tts-controls">
+<h2>Iroha-TTS Controls<a class="headerlink" href="#iroha-tts-controls" title="Link to this heading">#</a></h2>
+<p>When the checkpoint folder has an <code class="docutils literal notranslate"><span class="pre">iroha.json</span></code> (Iroha-TTS-V1 merged into S2-Pro), requests also accept emotion intensity and tag guidance under <code class="docutils literal notranslate"><span class="pre">stage_params.preprocessing</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/v1/audio/speech<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "input": "やっと会えたね！",</span>
+<span class="s1">    "stage_params": {"preprocessing": {"emotion": "joy", "intensity": "strong"}}</span>
+<span class="s1">  }'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>joy.wav
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">emotion</span></code></p></td>
+<td><p>Whole-line emotion: <code class="docutils literal notranslate"><span class="pre">joy</span></code>, <code class="docutils literal notranslate"><span class="pre">anger</span></code>, <code class="docutils literal notranslate"><span class="pre">sadness</span></code>, <code class="docutils literal notranslate"><span class="pre">surprise</span></code>, <code class="docutils literal notranslate"><span class="pre">neutral</span></code> or <code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">intensity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">weakest</span></code>, <code class="docutils literal notranslate"><span class="pre">weak</span></code>, <code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">strong</span></code>, or a number in that range. Needs <code class="docutils literal notranslate"><span class="pre">emotion</span></code> and no other tags in the text</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">guidance</span></code></p></td>
+<td><p>Strength for <code class="docutils literal notranslate"><span class="pre">[laugh]</span></code>, <code class="docutils literal notranslate"><span class="pre">[sigh]</span></code>, <code class="docutils literal notranslate"><span class="pre">[cry]</span></code> and <code class="docutils literal notranslate"><span class="pre">[whisper]</span></code> in the text. Defaults to the model config, which guides <code class="docutils literal notranslate"><span class="pre">[whisper]</span></code>; <code class="docutils literal notranslate"><span class="pre">0</span></code> turns it off</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Write readings in kana; <code class="docutils literal notranslate"><span class="pre">漢字[かな]</span></code> is not converted. Guided requests slow the batch they share, and at most 8 run with guidance at once; later ones run without it.</p>
+</section>
 <section id="known-limitations">
 <h2>Known Limitations<a class="headerlink" href="#known-limitations" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -808,6 +842,7 @@ references on CPU instead, clear both the GPU placement and its budget:</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthesize-speech">Synthesize Speech</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#request-parameters">Request Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iroha-tts-controls">Iroha-TTS Controls</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#known-limitations">Known Limitations</a></li>
 </ul>
   </nav></div>
