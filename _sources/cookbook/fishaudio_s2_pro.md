@@ -107,28 +107,6 @@ See the [streaming Fish Speech voice cloning request](../basic_usage/tts.md#fish
 | `top_k` | int | `30` | Top-k sampling. It must be `-1` or between `1` and `30` |
 | `repetition_penalty` | float | `1.1` | Repetition penalty |
 
-## Iroha-TTS Controls
-
-When the checkpoint folder has an `iroha.json` (Iroha-TTS-V1 merged into S2-Pro), requests also accept emotion intensity and tag guidance under `stage_params.preprocessing`:
-
-```bash
-curl -X POST http://localhost:8000/v1/audio/speech \
-  -H "Content-Type: application/json" \
-  -d '{
-    "input": "やっと会えたね！",
-    "stage_params": {"preprocessing": {"emotion": "joy", "intensity": "strong"}}
-  }' \
-  --output joy.wav
-```
-
-| Parameter | Description |
-|---|---|
-| `emotion` | Whole-line emotion: `joy`, `anger`, `sadness`, `surprise`, `neutral` or `none` |
-| `intensity` | `weakest`, `weak`, `default`, `strong`, or a number in that range. Needs `emotion` and no other tags in the text |
-| `guidance` | Strength for `[laugh]`, `[sigh]`, `[cry]` and `[whisper]` in the text. Defaults to the model config, which guides `[whisper]`; `0` turns it off |
-
-Write readings in kana; `漢字[かな]` is not converted. Guided requests slow the batch they share, and at most 8 run with guidance at once; later ones run without it.
-
 ## Known Limitations
 
 - `top_k` is constrained to `-1` or `1..30`; keep requests inside this range because invalid values currently fail the S2-Pro pipeline instead of returning a clean parameter error.
