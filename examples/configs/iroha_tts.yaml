@@ -1,0 +1,4 @@
+config_cls: IrohaTTSPipelineConfig
+# An Iroha-TTS-V1 checkpoint merged into S2-Pro, with iroha.json next to the weights;
+# replace it here or pass --model-path.
+model_path: iroha-tts-v1-merged

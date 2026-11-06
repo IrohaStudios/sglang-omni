@@ -10,4 +10,5 @@ titlesonly: true
 
 ../fishaudio_s2_pro.md
 ../fishaudio_drama3.md
+../iroha_tts.md
 ```
